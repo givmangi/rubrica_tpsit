@@ -5,6 +5,19 @@
 #define DIM 5
 using namespace std;
 
+    /*! \mainpage <CENTER> Gestione Rubrica </CENTER>
+    * \author <B> Mangiacotti Giuseppe Pio </B>
+    * \version <B> V1.1 </B>
+    * \date <B> Consegna progetto:   29/03/2021 </B>
+    * 
+    * \section caratteristiche CARATTERISTICHE DEL PROGETTO
+    *
+    *  Il software permette di:
+    * - Generare file rubrica con informazioni inserite da input
+    * - Stampare a schermo la rubrica da file 
+    * - Modificare campi del file rubrica
+    */
+
 struct Rubrica{
     int codice;
     string n_telefono,nome,cognome;
