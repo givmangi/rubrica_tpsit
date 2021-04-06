@@ -11,8 +11,8 @@ using namespace std;
 
     /*! \mainpage <CENTER> Gestione Rubrica </CENTER>
     * \author <B> Mangiacotti Giuseppe Pio </B>
-    * \version <B> V1.1 </B>
-    * \date <B> Consegna progetto:   29/03/2021 </B>
+    * \version <B> V1.0.2 </B>
+    * \date <B> Consegna progetto:   06/04/2021 </B>
     *
     * \section caratteristiche CARATTERISTICHE DEL PROGETTO
     *

@@ -6,6 +6,17 @@
 #include <cstdlib>
 #include <ctype.h>
 
+using namespace std;
+
+//! \class [FUNZIONI]
+
+//! \relates FUNZIONI
+/*! \fn crea(std::fstream &file,Rubrica contatto[],int DIM)
+    \brief crea rubrica salvando dati di input in file e struct
+    \param file stream del file
+    \param contatto vettore di struct rubrica in cui salvare contenuti
+    \param DIM numero contatti
+*/
 
 void crea(std::fstream &file,Rubrica contatto[],int DIM)
 {
@@ -38,6 +49,13 @@ void crea(std::fstream &file,Rubrica contatto[],int DIM)
     file.close();
 }
 
+//! relates FUNZIONI
+/*! \fn stampa(std::fstream &file, Rubrica contatto[])
+    \brief stampa contenuto file
+    \param file stream del file
+    \param contatto vettore di struct rubrica in cui salvare contenuti
+*/
+
 void stampa(std::fstream &file, Rubrica contatto[])
 {
     if(!file)
@@ -59,6 +77,12 @@ void stampa(std::fstream &file, Rubrica contatto[])
         file.close();
     }
 }
+
+//! relates FUNZIONI
+/*! \fn ricerca(std::fstream &file)
+    \brief ricerca contatto specifico e lo stampa
+    \param file stream del file
+*/
 
 void ricerca(std::fstream &file)
 {
@@ -86,6 +110,12 @@ void ricerca(std::fstream &file)
     }
     file.close();
 }
+
+//! relates FUNZIONI
+/*! \fn modifica(std::fstream &file)
+    \brief modifica un campo del file
+    \param file stream del file
+*/
 
 void modifica(std::fstream &file)
 {
