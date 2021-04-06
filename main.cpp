@@ -1,8 +1,12 @@
+#include "funzioni.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <stdlib.h>
+#include <cstdlib>
+#include <ctype.h>
 #define DIM 5
+
 using namespace std;
 
     /*! \mainpage <CENTER> Gestione Rubrica </CENTER>
@@ -18,14 +22,8 @@ using namespace std;
     * - Modificare campi del file rubrica
     */
 
-struct Rubrica{
-    int codice;
-    string n_telefono,nome,cognome;
-}contatto[DIM];
-
-void crea()
+void crea(std::fstream &file,Rubrica contatto[])
 {
-    ofstream file("rubrica.dat",ios::out|ios::binary);
     if(!file)
         cout<<"ERRORE NELL'APERTURA DEL FILE";
     else
@@ -35,31 +33,40 @@ void crea()
         {
             cout<<endl<<"\tInserimento "<<(i+1)<<" contatto:"<<endl;
             contatto[i].codice=(i+1);
+
             cout<<"Numero di telefono:\t";
             fflush(stdin);
             getline(cin,temp);
             contatto[i].n_telefono=temp;
+
             cout<<"Cognome:\t";
             getline(cin,temp);
             contatto[i].cognome=temp;
+
             cout<<"Nome:\t";
             getline(cin,temp);
             contatto[i].nome=temp;
+
             file.write((char *)&contatto[i],sizeof(contatto[i]));
         }
     }
     file.close();
 }
 
-void stampa()
+
+void stampa(std::fstream &file, Rubrica contatto[])
 {
-    ifstream file("rubrica.dat",ios::in|ios::binary);
     if(!file)
         cout<<"ERRORE NELL'APERTURA DEL FILE";
     else
     {
-        for(int i=0;i<DIM;i++)
-            file.read((char *)&contatto[i],sizeof(contatto[i]));
+        int i=0;
+        Rubrica appoggio;
+        while(file.read((char *)&appoggio,sizeof(appoggio)))
+        {
+            contatto[i]=appoggio;
+            i++;
+        }
         cout<<endl<<endl<<"\tRUBRICA:"<<endl;
         for(int i=0;i<DIM;i++)
             cout<<endl<<contatto[i].codice<<"\t"<<contatto[i].n_telefono<<"\t"<<contatto[i].cognome<<" "<<contatto[i].nome;
@@ -67,9 +74,8 @@ void stampa()
     file.close();
 }
 
-void ricerca()
+void ricerca(std::fstream &file)
 {
-    ifstream file("rubrica.dat",ios::in|ios::binary);
     if(!file)
         cout<<"ERRORE NELL'APERTURA DEL FILE";
     else
@@ -80,6 +86,8 @@ void ricerca()
             ins++;
         cout<<"Inserire ID da trovare: ";
         cin>>ID;
+        file.clear();
+        cout<<"ins: "<<ins;
         if(ID<=ins)
         {
             file.seekg(ID*sizeof(found));
@@ -89,12 +97,10 @@ void ricerca()
         else
             cout<<"ID non presente nel file.";
     }
-    file.close();
 }
 
-void modifica()
+void modifica(std::fstream &file)
 {
-    fstream file("rubrica.dat",ios::in|ios::out|ios::binary);
     if(!file)
         cout<<"ERRORE NELL'APERTURA DEL FILE";
     else
@@ -140,14 +146,20 @@ void modifica()
         else
             cout<<"ID non presente nel file.";
     }
-    file.close();
 }
+
+
+
 
 int main()
 {
+    //! \brief main con menu a scelta
+    fstream registro("rubrica.dat",ios::in|ios::out|ios::binary);
+    Rubrica contatto[DIM];
     int op;
     do
     {
+        registro.clear();
         do
         {
             cout<<endl<<"\tINSERIRE OPERAZIONE DA ESEGUIRE:"<<endl;
@@ -162,13 +174,13 @@ int main()
         while(op<1||op>5);
         switch(op)
         {
-            case 1:crea();
+            case 1:crea(registro,contatto);
                    break;
-            case 2:stampa();
+            case 2:stampa(registro,contatto);
                    break;
-            case 3:ricerca();
+            case 3:ricerca(registro);
                    break;
-            case 4:modifica();
+            case 4:modifica(registro);
                    break;
         }
     }
