@@ -1,5 +1,4 @@
 #include "funzioni.h"
-#include "mystruct.h"
 #include <iostream>
 #include <fstream>
 #include <string>

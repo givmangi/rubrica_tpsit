@@ -1,7 +1,9 @@
 #ifndef FUNZIONI_H_INCLUDED
 #define FUNZIONI_H_INCLUDED
+#include <string>
 
 using namespace std;
+
 struct Rubrica{
     int codice;
     string n_telefono,nome,cognome;
