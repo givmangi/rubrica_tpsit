@@ -9,9 +9,9 @@ struct Rubrica{
     string n_telefono,nome,cognome;
 };
 
-void crea(std::fstream &registro, Rubrica contatto[]);
-void stampa();
-void ricerca();
-void modifica();
+void crea(std::fstream &file, Rubrica contatto[],int DIM);
+void stampa(std::fstream &file, Rubrica contatto[]);
+void ricerca(std::fstream &file);
+void modifica(std::fstream &file);
 
 #endif // FUNZIONI_H_INCLUDED
