@@ -46,16 +46,18 @@ void stampa(std::fstream &file, Rubrica contatto[])
     {
         int i=0;
         Rubrica appoggio;
+        file.clear();
+        file.seekg(0,ios::beg);
         while(file.read((char *)&appoggio,sizeof(appoggio)))
         {
             contatto[i]=appoggio;
             i++;
         }
         cout<<endl<<endl<<"\tRUBRICA:"<<endl;
-        for(i;i>0;i--)
-            cout<<endl<<contatto[i].codice<<"\t"<<contatto[i].n_telefono<<"\t"<<contatto[i].cognome<<" "<<contatto[i].nome;
+        for(int j=0;j<i;j++)
+            cout<<endl<<contatto[j].codice<<"\t"<<contatto[j].n_telefono<<"\t"<<contatto[j].cognome<<" "<<contatto[j].nome;
+        file.close();
     }
-    file.close();
 }
 
 void ricerca(std::fstream &file)
@@ -65,22 +67,24 @@ void ricerca(std::fstream &file)
     else
     {
         Rubrica found;
-        long ID,ins=0;
+        long pos,ID,ins=0;
         while(file.read((char *)&found,sizeof(found)))
             ins++;
         cout<<"Inserire ID da trovare: ";
         cin>>ID;
         file.clear();
-        cout<<"ins: "<<ins;
+        file.seekg(0,ios::beg);
         if(ID<=ins)
         {
-            file.seekg(ID*sizeof(found));
+            pos=(ID-1)*sizeof(found);
+            file.seekg(pos,ios::beg);
             file.read((char*)&found,sizeof(found));
             cout<<found.codice<<": "<<found.n_telefono<<"\t"<<found.cognome<<" "<<found.nome;
         }
         else
             cout<<"ID non presente nel file.";
     }
+    file.close();
 }
 
 void modifica(std::fstream &file)
@@ -95,24 +99,26 @@ void modifica(std::fstream &file)
         long pos,ID,ins=0;
         while(file.read((char *)&found,sizeof(found)))
             ins++;
+        file.clear();
+        file.seekg(0,ios::beg);
         cout<<"Inserire ID del contatto da modificare: ";
         cin>>ID;
         if(ID<=ins)
         {
-            pos=ID*sizeof(found);
+            pos=(ID-1)*sizeof(found);
             file.seekg(pos);
             file.read((char*)&found,sizeof(found));
-            cout<<found.codice<<": "<<found.n_telefono<<"\t"<<found.cognome<<" "<<found.nome;
+            sost=found;
+            cout<<endl<<found.codice<<": \t"<<found.n_telefono<<"\t"<<found.cognome<<" "<<found.nome;
             do
             {
-                cout<<"\tInserire campo da sostituire:"<<endl;
+                cout<<endl<<"\tInserire campo da sostituire:"<<endl;
                 cout<<"1)Numero di telefono"<<endl;
                 cout<<"2)Cognome"<<endl;
                 cout<<"3)Nome"<<endl;
                 cin>>op;
             }
             while(op<1||op>3);
-            sost=found;
             cout<<"Inserire nuovo valore:";
             cin>>newValue;
             switch(op)
@@ -124,10 +130,11 @@ void modifica(std::fstream &file)
                 case 3: sost.nome=newValue;
                         break;
             }
-            file.seekp(pos);
+            file.seekp(pos,ios::beg);
             file.write((char *)&sost, sizeof(sost));
         }
         else
             cout<<"ID non presente nel file.";
     }
+    file.close();
 }

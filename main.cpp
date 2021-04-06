@@ -22,26 +22,18 @@ using namespace std;
     * - Modificare campi del file rubrica
     */
 
-
-
-
-
-
-
-
-
 int main()
 {
     //! \brief main con menu a scelta
-    fstream registro("rubrica.dat",ios::in|ios::out|ios::binary);
+
     Rubrica contatto[DIM];
     int op;
     do
     {
-        registro.clear();
+        fstream registro("rubrica.dat",ios::in|ios::out|ios::binary);
         do
         {
-            cout<<endl<<"\tINSERIRE OPERAZIONE DA ESEGUIRE:"<<endl;
+            cout<<endl<<endl<<"\tINSERIRE OPERAZIONE DA ESEGUIRE:"<<endl;
             cout<<"1)Inserimento rubrica"<<endl;
             cout<<"2)Stampa"<<endl;
             cout<<"3)Ricerca per ID"<<endl;
